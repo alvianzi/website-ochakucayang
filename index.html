@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Untuk Kamu, Sayangku 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0608;
+      --cream: #fef8f0;
+      --blush: #e8a0aa;
+      --rose: #c45c6a;
+      --deep-rose: #8b2d3a;
+      --gold: #d4a853;
+      --gold-light: #f0d080;
+      --text: #2a1218;
+      --text-light: #5a3040;
+      --card-bg: #fffbf5;
+      --glass: rgba(255,245,235,0.06);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      font-family: 'EB Garamond', serif;
+      color: var(--cream);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── ANIMATED BG ── */
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(140,45,60,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 70%, rgba(180,80,100,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 50% 10%, rgba(212,168,83,0.12) 0%, transparent 60%),
+        #0d0608;
+      animation: bgPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.15); }
+    }
+
+    /* ── STARS ── */
+    .stars {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .star {
+      position: absolute; background: white; border-radius: 50%;
+      animation: twinkle var(--d, 3s) ease-in-out infinite alternate;
+      opacity: 0;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: var(--op, 0.7); transform: scale(1); }
+    }
+
+    /* ── PETALS ── */
+    .petals-wrap {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;
+    }
+    .petal {
+      position: absolute; top: -80px;
+      animation: petalFall linear infinite;
+      filter: drop-shadow(0 2px 4px rgba(196,92,106,0.3));
+    }
+    @keyframes petalFall {
+      0% { transform: translateY(-80px) rotate(0deg) translateX(0); opacity: 0.8; }
+      50% { transform: translateY(50vh) rotate(180deg) translateX(30px); opacity: 0.6; }
+      100% { transform: translateY(115vh) rotate(360deg) translateX(-20px); opacity: 0; }
+    }
+
+    /* ── MAIN PAGE ── */
+    .page {
+      position: relative; z-index: 2;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 80px;
+      gap: 0;
+    }
+
+    /* ── HEADER SECTION ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: heroIn 1.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .envelope-glow {
+      font-size: 5rem;
+      display: inline-block;
+      animation: floatEnv 3s ease-in-out infinite, glowEnv 2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 20px rgba(228,100,120,0.6));
+    }
+    @keyframes floatEnv {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+    @keyframes glowEnv {
+      from { filter: drop-shadow(0 0 15px rgba(228,100,120,0.5)); }
+      to { filter: drop-shadow(0 0 35px rgba(228,100,120,0.9)); }
+    }
+    .hero-subtitle {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 200;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-top: 16px;
+      opacity: 0.8;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card-bg);
+      border: none;
+      border-radius: 4px;
+      max-width: 640px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(212,168,83,0.3),
+        0 0 0 4px rgba(212,168,83,0.08),
+        0 30px 80px rgba(0,0,0,0.6),
+        0 0 60px rgba(196,92,106,0.15);
+      animation: cardIn 1.6s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+      color: var(--text);
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(60px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Gold border top */
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+    }
+    /* Gold border bottom */
+    .card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+    }
+
+    .card-inner {
+      padding: 55px 48px 55px;
+      position: relative;
+    }
+
+    /* Corner ornaments */
+    .corner { position: absolute; color: var(--gold); font-size: 1.4rem; line-height: 1; }
+    .corner-tl { top: 16px; left: 20px; }
+    .corner-tr { top: 16px; right: 20px; }
+    .corner-bl { bottom: 16px; left: 20px; }
+    .corner-br { bottom: 16px; right: 20px; }
+
+    /* ── TYPOGRAPHY ── */
+    .label-top {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--rose);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .heading-main {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+      font-weight: 600;
+      color: var(--deep-rose);
+      text-align: center;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .divider {
+      text-align: center;
+      color: var(--gold);
+      letter-spacing: 0.6em;
+      margin: 22px 0;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 25%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .divider::before { left: 5%; }
+    .divider::after { right: 5%; transform: scaleX(-1); }
+
+    /* ── MUSIC PLAYER ── */
+    .music-player {
+      background: linear-gradient(135deg, #fff0f2, #ffe8ec);
+      border: 1px solid rgba(196,92,106,0.25);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(196,92,106,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+    .music-player::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+    .music-disc {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: conic-gradient(var(--deep-rose), var(--rose), var(--blush), var(--rose), var(--deep-rose));
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(139,45,58,0.4);
+      position: relative;
+    }
+    .music-disc::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      background: var(--card-bg);
+      border-radius: 50%;
+    }
+    .music-disc.playing { animation: discSpin 2s linear infinite; }
+    @keyframes discSpin { to { transform: rotate(360deg); } }
+    .music-disc-icon {
+      position: absolute; z-index: 1;
+      font-size: 0.85rem;
+    }
+    .music-info { flex: 1; min-width: 0; }
+    .music-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--deep-rose);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .music-artist {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
+    .music-note {
+      font-size: 0.6rem;
+      color: #999;
+      margin-top: 4px;
+      font-style: italic;
+    }
+    .play-btn {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(139,45,58,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(139,45,58,0.5);
+    }
+    .play-btn:active { transform: scale(0.95); }
+
+    /* ── BODY TEXT ── */
+    .body-text {
+      font-size: clamp(1rem, 2.2vw, 1.18rem);
+      font-weight: 400;
+      line-height: 2;
+      color: var(--text-light);
+      text-align: center;
+      margin: 22px 0;
+    }
+    .body-text em {
+      font-style: italic;
+      color: var(--rose);
+      font-weight: 400;
+    }
+
+    /* ── LOVE BOX ── */
+    .love-box {
+      background: linear-gradient(135deg, #fff5f7, #fce8ec);
+      border-left: 3px solid var(--rose);
+      border-radius: 0 12px 12px 0;
+      padding: 26px 30px;
+      margin: 28px 0;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(196,92,106,0.08), 0 4px 20px rgba(196,92,106,0.08);
+    }
+    .love-box::before {
+      content: '"';
+      position: absolute; top: -8px; left: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--blush);
+      opacity: 0.4;
+      line-height: 1;
+    }
+    .love-box p {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--deep-rose);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-label {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 200;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin: 30px 0 18px;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .photo-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    .photo-item::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      border-radius: 8px;
+      border: 1px solid rgba(212,168,83,0.3);
+      pointer-events: none;
+    }
+    .photo-item::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(139,45,58,0.25) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .photo-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .photo-item:hover img { transform: scale(1.07); }
+
+    /* ── SIGNATURE ── */
+    .signature-area {
+      text-align: center;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(212,168,83,0.2);
+    }
+    .signature-label {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 200;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .signature {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--rose);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── HEARTS ── */
+    .hearts {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+      font-size: 1.4rem;
+    }
+    .heart {
+      display: inline-block;
+      animation: hb 1.4s ease-in-out infinite;
+    }
+    .heart:nth-child(1) { animation-delay: 0s; }
+    .heart:nth-child(2) { animation-delay: 0.18s; }
+    .heart:nth-child(3) { animation-delay: 0.36s; }
+    .heart:nth-child(4) { animation-delay: 0.54s; }
+    .heart:nth-child(5) { animation-delay: 0.72s; }
+    @keyframes hb {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.35); }
+      60% { transform: scale(0.95); }
+    }
+
+    /* ── BOTTOM SEAL ── */
+    .seal {
+      margin-top: 56px;
+      animation: cardIn 1s ease 1.5s both;
+    }
+    .seal-ring {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(212,168,83,0.12), 0 0 30px rgba(212,168,83,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      animation: sealRotate 15s linear infinite;
+      color: var(--gold);
+      background: radial-gradient(circle, rgba(212,168,83,0.08), transparent);
+    }
+    @keyframes sealRotate { to { transform: rotate(360deg); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .card-inner { padding: 40px 24px 44px; }
+      .photo-grid { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Audio -->
+<audio id="audioTrack" preload="auto" loop>
+  <source src="Lagu/Lagu.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Background layers -->
+<div class="bg-layer"></div>
+<div class="stars" id="starsContainer"></div>
+<div class="petals-wrap" id="petalsContainer"></div>
+
+<div class="page">
+
+  <!-- Hero Header -->
+  <div class="hero">
+    <div class="envelope-glow">💌</div>
+    <div class="hero-subtitle">✦ &nbsp; Sebuah Ungkapan Dari Hati &nbsp; ✦</div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="card">
+    <!-- Corner ornaments -->
+    <span class="corner corner-tl">❧</span>
+    <span class="corner corner-tr">❧</span>
+    <span class="corner corner-bl">❧</span>
+    <span class="corner corner-br">❧</span>
+
+    <div class="card-inner">
+      <div class="label-top">— Khusus Untukmu —</div>
+      <div class="heading-main">Maafkan Aku,<br/>Sayangku</div>
+
+      <div class="divider">❦</div>
+
+      <!-- Music Player -->
+      <div class="music-player">
+        <div class="music-disc" id="musicDisc">
+          <span class="music-disc-icon">🎵</span>
+        </div>
+        <div class="music-info">
+          <div class="music-title">One Less Lonely Girl</div>
+          <div class="music-artist">Justin Bieber</div>
+          <div class="music-note">Tekan play untuk memutar lagu ♡</div>
+        </div>
+        <button class="play-btn" id="playBtn" onclick="toggleMusic()">▶</button>
+      </div>
+
+      <!-- Body Text -->
+      <p class="body-text">
+        Aku tahu aku telah menyakitimu,<br/>
+        dan itu adalah hal yang paling <em>aku sesali</em><br/>
+        dalam hidupku. Aku berusaha untuk berubah<br/>
+        menjadi lebih <em>dewasa</em> dalam menjaga kita.
+      </p>
+
+      <!-- Quote Box -->
+      <div class="love-box">
+        <p>
+          Sayangku adalah segalanya bagiku. Setiap hari, setiap detik,
+          aku selalu memikirkanmu. Aku <em>sangat menyayangimu</em> 
+          lebih dari yang bisa kuungkapkan dengan kata-kata.
+          Tolong percayai aku, percayai hati ini yang hanya
+          berdenyut untukmu. Cinta ku selalu bertambah seiringnya hari dan akan terus begitu
+        </p>
+      </div>
+
+      <p class="body-text">
+        Aku memohon maafmu dengan sepenuh hati.<br/>
+        Beri aku kesempatan untuk menjadi lebih baik,<br/>
+        untuk mencintaimu seperti yang <em>kamu layak dapatkan</em>.
+      </p>
+
+      <div class="divider">❦</div>
+
+      <!-- Gallery -->
+      <div class="gallery-label">✦ &nbsp; Kenangan Kita &nbsp; ✦</div>
+      <div class="photo-grid">
+        <div class="photo-item"><img src="Foto/foto1.jpeg" alt="Kenangan 1" onerror="this.parentNode.style.background='linear-gradient(135deg,#fce8ec,#f5c8d0)'; this.style.display='none'"/></div>
+        <div class="photo-item"><img src="Foto/foto2.jpeg" alt="Kenangan 2" onerror="this.parentNode.style.background='linear-gradient(135deg,#fce8ec,#f5c8d0)'; this.style.display='none'"/></div>
+        <div class="photo-item"><img src="Foto/foto3.jpeg" alt="Kenangan 3" onerror="this.parentNode.style.background='linear-gradient(135deg,#fce8ec,#f5c8d0)'; this.style.display='none'"/></div>
+        <div class="photo-item"><img src="Foto/foto4.jpeg" alt="Kenangan 4" onerror="this.parentNode.style.background='linear-gradient(135deg,#fce8ec,#f5c8d0)'; this.style.display='none'"/></div>
+      </div>
+
+      <div class="divider">❦</div>
+
+      <!-- Signature -->
+      <div class="signature-area">
+        <div class="signature-label">Dengan sepenuh cinta</div>
+        <div class="signature">Aku yang selalu menyayangimu ♡</div>
+      </div>
+
+      <div class="hearts">
+        <span class="heart">❤️</span>
+        <span class="heart">🌹</span>
+        <span class="heart">❤️</span>
+        <span class="heart">🌹</span>
+        <span class="heart">❤️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seal -->
+  <div class="seal">
+    <div class="seal-ring">♡</div>
+  </div>
+
+</div>
+
+<script>
+  /* ── STARS ── */
+  const starsWrap = document.getElementById('starsContainer');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      width:${size}px;
+      height:${size}px;
+      --d:${2+Math.random()*4}s;
+      --op:${0.3+Math.random()*0.6};
+      animation-delay:${Math.random()*5}s;
+    `;
+    starsWrap.appendChild(s);
+  }
+
+  /* ── PETALS ── */
+  const petalsWrap = document.getElementById('petalsContainer');
+  const petalEmoji = ['🌸','🌺','🌹','❤️','✿','♡','🌷'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalEmoji[Math.floor(Math.random() * petalEmoji.length)];
+    p.style.cssText = `
+      left:${Math.random()*100}vw;
+      font-size:${0.9+Math.random()*1.3}rem;
+      animation-duration:${7+Math.random()*10}s;
+      animation-delay:${Math.random()*12}s;
+      opacity:${0.4+Math.random()*0.4};
+    `;
+    petalsWrap.appendChild(p);
+  }
+
+  /* ── AUDIO PLAYER ── */
+  const audio  = document.getElementById('audioTrack');
+  const btn    = document.getElementById('playBtn');
+  const disc   = document.getElementById('musicDisc');
+  let playing  = false;
+
+  function toggleMusic() {
+    if (!playing) {
+      audio.play()
+        .then(() => {
+          playing = true;
+          btn.textContent = '⏸';
+          disc.classList.add('playing');
+        })
+        .catch(err => {
+          console.warn('Audio gagal diputar:', err);
+          alert('Pastikan file lagu ada di folder Lagu/Lagu.mp3 ya! ♡');
+        });
+    } else {
+      audio.pause();
+      playing = false;
+      btn.textContent = '▶';
+      disc.classList.remove('playing');
+    }
+  }
+
+  /* Resume if interrupted */
+  audio.addEventListener('pause', () => {
+    if (playing) {
+      btn.textContent = '▶';
+      disc.classList.remove('playing');
+      playing = false;
+    }
+  });
+</script>
+
+</body>
+</html>
